@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Document</title>
+</head>
+<body>
+   <button id="btn">Click</button>
+   <script>
+      btn.onclick = () => {
+         const event = new ButtonClickEvent('ok');
+         localStorage.setItem('__bus__', event.toString());
+      }
+      window.addEventListener('storage', (e) => {
+         if(e.key === '__bus__') {
+            console.log(ButtonClickEvent.fromString(e.newValue))
+         }
+      });
+
+      let eventIdCounter = 0;
+      class ButtonClickEvent {
+         constructor(buttonName, eventId) {
+            this.eventId = eventId || eventIdCounter++;
+            this.buttonName = buttonName;
+         }
+         toString() {
+            return JSON.stringify({
+               eventId: this.eventId,
+               buttonName: this.buttonName
+            })
+         }
+         static fromString(str) {
+            const buttonName = JSON.parse(str).buttonName;
+            const eventId = JSON.parse(str).eventId;
+            return new ButtonClickEvent(buttonName, eventId);
+         }
+      }
+   </script>
+</body>
+</html>
