@@ -1,6 +1,6 @@
 
 type traverceCtx = { [vertex:string]: boolean }
-class Graph {
+class AjacentListGraph {
    private adjacentList: { [name: string]: string[] } = {};
 
    addVertex(vertex: string) {
@@ -41,7 +41,7 @@ class Graph {
    }
 }
 
-const graph = new Graph();
+const graph = new AjacentListGraph();
 graph.addVertex('A');
 graph.addVertex('B');
 graph.addVertex('C');
@@ -59,4 +59,4 @@ console.log(graph.deepTraverse('A'))
 
 
 
-export { Graph }
+export { AjacentListGraph }
